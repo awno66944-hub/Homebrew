@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PS4 Jailbreak & Ultimate Homebrew Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap');
+        body { font-family: 'Cairo', sans-serif; background-color: #090d16; color: #f8fafc; }
+        .card-hover:hover { transform: translateY(-3px); box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.2); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between p-4 md:p-6">
+
+    <!-- Header & IP Configuration -->
+    <header class="max-w-5xl mx-auto w-full bg-slate-900/90 backdrop-blur border border-slate-800 rounded-2xl p-4 mb-6 flex flex-col md:flex-row justify-between items-center gap-4 shadow-xl sticky top-4 z-50">
+        <div class="flex items-center space-x-3 space-x-reverse">
+            <div class="bg-blue-600 p-2.5 rounded-xl text-white font-black text-xl shadow-lg shadow-blue-600/30">
+                <i class="fa-solid fa-gamepad"></i>
+            </div>
+            <div>
+                <h1 class="text-base font-black text-white">PS4 Ultimate Hub & Tools</h1>
+                <p class="text-xs text-slate-400">لوحة التحكم المركزية لتطبيقات الهوم بريو والمتجر (5.05 - 14.00)</p>
+            </div>
+        </div>
+
+        <!-- PS4 IP Input -->
+        <div class="flex items-center gap-2 bg-slate-950 border border-slate-800 px-3 py-2 rounded-xl">
+            <span class="text-xs text-slate-400 font-semibold"><i class="fa-solid fa-network-wired ml-1"></i> PS4 IP:</span>
+            <input type="text" id="ps4Ip" value="192.168.1.50" class="bg-transparent text-blue-400 font-mono text-sm focus:outline-none w-32 text-center" placeholder="192.168.1.X">
+        </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="max-w-5xl mx-auto w-full space-y-6 flex-1">
+        
+        <!-- SECTION 1: Payloader & Remote Installer (Network Control) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <!-- Payloader Server (Port 9090) -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between shadow-xl">
+                <div>
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="bg-purple-500/10 text-purple-400 border border-purple-500/20 text-xs px-2.5 py-1 rounded-full font-bold">Port 9090</span>
+                        <i class="fa-solid fa-code text-purple-400"></i>
+                    </div>
+                    <h2 class="text-lg font-bold mb-1 text-slate-100">سيرفر الـ Payloader</h2>
+                    <p class="text-slate-400 text-xs mb-4">إرسال ملفات الأكواد والـ Payloads (مثل GoldHEN.bin) مباشرة للبلايستيشن[span_0](start_span)[span_0](end_span).</p>
+                    <input type="file" id="payloadFile" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 mb-4 file:mr-3 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-purple-600 file:text-white">
+                </div>
+                <button onclick="sendPayload()" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-2.5 rounded-xl text-xs transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-paper-plane"></i> إرسال الـ Payload
+                </button>
+            </div>
+
+            <!-- Remote Package Installer (Port 43210) -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between shadow-xl">
+                <div>
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs px-2.5 py-1 rounded-full font-bold">Port 43210</span>
+                        <i class="fa-solid fa-download text-blue-400"></i>
+                    </div>
+                    <h2 class="text-lg font-bold mb-1 text-slate-100">مثبت التطبيقات والألعاب المباشر</h2>
+                    <p class="text-slate-400 text-xs mb-4">إرسال رابط ملف PKG مباشر لتثبيته فوراً على البلايستيشن عبر الشبكة[span_1](start_span)[span_1](end_span).</p>
+                    <input type="text" id="pkgUrl" placeholder="http://your-server/app.pkg" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500 mb-4 font-mono">
+                </div>
+                <button onclick="installGame(document.getElementById('pkgUrl').value)" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-2.5 rounded-xl text-xs transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-cloud-arrow-down"></i> تثبيت على الـ PS4
+                </button>
+            </div>
+
+        </div>
+
+        <!-- SECTION 2: All Homebrew Apps, YouTube, Spotify & Stores -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
+            <h2 class="text-lg font-bold text-slate-100 mb-1"><i class="fa-solid fa-boxes-stacked text-emerald-400 ml-2"></i> جميع تطبيقات الهوم بريو وتطبيقات الـ PKG الأساسية</h2>
+            <p class="text-xs text-slate-400 mb-5">تثبيت المتجر، يوتيوب، سبوتيفاي، والأدوات الاحترافية طيران بضغطة زر واحدة عبر الشبكة.</p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-4">
+                
+                <!-- HB-Store -->
+                <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl flex flex-col justify-between card-hover transition">
+                    <div>
+                        <span class="text-[10px] bg-red-500/10 text-red-400 px-2 py-0.5 rounded font-bold">متجر التطبيقات</span>
+                        <h3 class="font-bold text-xs text-white mt-2">HB-Store</h3>
+                        <p class="text-[11px] text-slate-400 mt-1 mb-4">متجر الهوم بريو الشامل لتحميل التطبيقات.</p>
+                    </div>
+                    <button onclick="installGame('http://your-server/apps/hb_store.pkg')" class="w-full bg-red-600 hover:bg-red-500 text-white text-[11px] font-bold py-2 rounded-lg transition">
+                        تثبيت المتجر
+                    </button>
+                </div>
+
+                <!-- YouTube -->
+                <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl flex flex-col justify-between card-hover transition">
+                    <div>
+                        <span class="text-[10px] bg-rose-500/10 text-rose-400 px-2 py-0.5 rounded font-bold">ترفيه</span>
+                        <h3 class="font-bold text-xs text-white mt-2">YouTube PKG</h3>
+                        <p class="text-[11px] text-slate-400 mt-1 mb-4">تطبيق يوتيوب معدل بدون حساب PSN.</p>
+                    </div>
+                    <button onclick="installGame('http://your-server/apps/youtube.pkg')" class="w-full bg-rose-600 hover:bg-rose-500 text-white text-[11px] font-bold py-2 rounded-lg transition">
+                        تثبيت يوتيوب
+                    </button>
+                </div>
+
+                <!-- Spotify -->
+                <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl flex flex-col justify-between card-hover transition">
+                    <div>
+                        <span class="text-[10px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded font-bold">موسيقى</span>
+                        <h3 class="font-bold text-xs text-white mt-2">Spotify PKG</h3>
+                        <p class="text-[11px] text-slate-400 mt-1 mb-4">تطبيق سبوتيفاي معدل للجيلبريك.</p>
+                    </div>
+                    <button onclick="installGame('http://your-server/apps/spotify.pkg')" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-bold py-2 rounded-lg transition">
+                        تثبيت سبوتيفاي
+                    </button>
+                </div>
+
+                <!-- Apollo Save Tool -->
+                <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl flex flex-col justify-between card-hover transition">
+                    <div>
+                        <span class="text-[10px] bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded font-bold">إدارة التخزينات</span>
+                        <h3 class="font-bold text-xs text-white mt-2">Apollo Save Tool</h3>
+                        <p class="text-[11px] text-slate-400 mt-1 mb-4">تعديل وإدارة وتحميل تخزينات الألعاب[span_2](start_span)[span_2](end_span).</p>
+                    </div>
+                    <button onclick="installGame('http://your-server/apps/apollo.pkg')" class="w-full bg-amber-600 hover:bg-amber-500 text-white text-[11px] font-bold py-2 rounded-lg transition">
+                        تثبيت Apollo
+                    </button>
+                </div>
+
+                <!-- PS MTP Explorer -->
+                <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl flex flex-col justify-between card-hover transition">
+                    <div>
+                        <span class="text-[10px] bg-pink-500/10 text-pink-400 px-2 py-0.5 rounded font-bold">ربط الهاتف USB</span>
+                        <h3 class="font-bold text-xs text-white mt-2">PS MTP Explorer</h3>
+                        <p class="text-[11px] text-slate-400 mt-1 mb-4">نقل وتثبيت الألعاب من هاتفك الأندرويد مباشرة[span_3](start_span)[span_3](end_span).</p>
+                    </div>
+                    <button onclick="installGame('http://your-server/apps/mtp_explorer.pkg')" class="w-full bg-pink-600 hover:bg-pink-500 text-white text-[11px] font-bold py-2 rounded-lg transition">
+                        تثبيت MTP
+                    </button>
+                </div>
+
+                <!-- PS4-Xplorer -->
+                <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl flex flex-col justify-between card-hover transition">
+                    <div>
+                        <span class="text-[10px] bg-cyan-500/10 text-cyan-400 px-2 py-0.5 rounded font-bold">مدير الملفات</span>
+                        <h3 class="font-bold text-xs text-white mt-2">PS4-Xplorer</h3>
+                        <p class="text-[11px] text-slate-400 mt-1 mb-4">تصفح الهارد الداخلي ونسخ الملفات[span_4](start_span)[span_4](end_span).</p>
+                    </div>
+                    <button onclick="installGame('http://your-server/apps/xplorer.pkg')" class="w-full bg-cyan-600 hover:bg-cyan-500 text-white text-[11px] font-bold py-2 rounded-lg transition">
+                        تثبيت Xplorer
+                    </button>
+                </div>
+
+                <!-- Itemzflow -->
+                <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl flex flex-col justify-between card-hover transition">
+                    <div>
+                        <span class="text-[10px] bg-purple-500/10 text-purple-400 px-2 py-0.5 rounded font-bold">مشغل الألعاب</span>
+                        <h3 class="font-bold text-xs text-white mt-2">Itemzflow Launcher</h3>
+                        <p class="text-[11px] text-slate-400 mt-1 mb-4">مكتبة ألعاب متطورة وإدارة الغش[span_5](start_span)[span_5](end_span).</p>
+                    </div>
+                    <button onclick="installGame('http://your-server/apps/itemzflow.pkg')" class="w-full bg-purple-600 hover:bg-purple-500 text-white text-[11px] font-bold py-2 rounded-lg transition">
+                        تثبيت Itemzflow
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- SECTION 3: FTP Explorer Quick Access -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 flex flex-col md:flex-row justify-between items-center gap-4 shadow-xl">
+            <div>
+                <h2 class="text-base font-bold text-slate-100"><i class="fa-solid fa-folder-open text-cyan-400 ml-2"></i> اتصال الـ FTP السريع (Port 2121)</h2>
+                <p class="text-xs text-slate-400 mt-1">تأكد من تفعيل خيار FTP Server من قائمة GoldHEN لتتصفح ملفات النظام من الحاسوب[span_6](start_span)[span_6](end_span).</p>
+            </div>
+            <button onclick="openFtp()" class="bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold py-2.5 px-5 rounded-xl transition flex items-center gap-2">
+                <i class="fa-solid fa-external-link-alt"></i> فتح مستعرض الـ FTP
+            </button>
+        </div>
+
+    </main>
+
+    <!-- SECTION 4: Terminal Log -->
+    <footer class="max-w-5xl mx-auto w-full mt-6 bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-xl">
+        <div class="flex justify-between items-center mb-2">
+            <span class="text-xs font-bold text-slate-400"><i class="fa-solid fa-terminal ml-1"></i> سجل الأوامر والاتصال:</span>
+            <button onclick="document.getElementById('statusLog').innerHTML=''" class="text-xs text-slate-500 hover:text-slate-300">مسح السجل</button>
+        </div>
+        <div id="statusLog" class="bg-slate-950 border border-slate-800 rounded-xl p-3 h-24 overflow-y-auto font-mono text-xs text-slate-300">
+            [جاهز] أدخل عنوان الـ IP الخاص بجهاز الـ PS4 وابدأ التحكم...
+        </div>
+    </footer>
+
+    <!-- JavaScript Actions Logic -->
+    <script>
+        const logBox = document.getElementById('statusLog');
+
+        function log(message, type = 'info') {
+            const time = new Date().toLocaleTimeString();
+            let color = 'text-slate-300';
+            if (type === 'success') color = 'text-emerald-400';
+            if (type === 'error') color = 'text-rose-400';
+            logBox.innerHTML += `<div class="${color}">[${time}] ${message}</div>`;
+            logBox.scrollTop = logBox.scrollHeight;
+        }
+
+        async function sendPayload() {
+            const ip = document.getElementById('ps4Ip').value;
+            const fileInput = document.getElementById('payloadFile');
+            if (!ip) { log('الرجاء إدخال آيبي الـ PS4.', 'error'); return; }
+            if (fileInput.files.length === 0) { log('الرجاء اختيار ملف Payload بصيغة .bin.', 'error'); return; }
+
+            const file = fileInput.files[0];
+            log(`جاري قراءة الملف ${file.name}...`, 'info');
+            try {
+                const buffer = await file.arrayBuffer();
+                const response = await fetch(`http://${ip}:9090`, { method: 'POST', body: buffer });
+                if (response.ok) {
+                    log('تم إرسال وتشغيل الـ Payload بنجاح على البلايستيشن!', 'success');
+                } else {
+                    log('فشل الاستجابة من البلايستيشن، تأكد من تفعيل Payloader Server.', 'error');
+                }
+            } catch (err) {
+                log('خطأ في الاتصال بالشبكة (CORS/Network Error).', 'error');
+            }
+        }
+
+        async function installGame(url) {
+            const ip = document.getElementById('ps4Ip').value;
+            if (!ip || !url) { log('تأكد من إدخال الآيبي ورابط التطبيق.', 'error'); return; }
+
+            log(`جاري إرسال طلب التثبيت إلى ${ip}...`, 'info');
+            try {
+                const response = await fetch(`http://${ip}:43210/api`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ type: 'install', uris: [url] })
+                });
+                const data = await response.json();
+                log(`تم إرسال التطبيق بنجاح للـ PS4!`, 'success');
+            } catch (err) {
+                log('فشل الاتصال بتطبيق Remote Package Installer على البلايستيشن[span_7](start_span)[span_7](end_span).', 'error');
+            }
+        }
+
+        function openFtp() {
+            const ip = document.getElementById('ps4Ip').value;
+            if (!ip) { alert('أدخل آيبي البلايستيشن أولاً.'); return; }
+            window.open(`ftp://${ip}:2121`, '_blank');
+        }
+    </script>
+</body>
+</html>
